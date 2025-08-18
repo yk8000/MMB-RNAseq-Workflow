@@ -1,5 +1,5 @@
 # Gene-level summarization with tximport
-## Summarize transcript-level quantification to gene-level counts/TPM
+# Summarize transcript-level quantification to gene-level counts/TPM
 ```
 library(tximport)
 
