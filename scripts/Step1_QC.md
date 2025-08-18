@@ -5,7 +5,7 @@ This step performs quality assessment of raw FASTQ files.
 
 ## Commands
 
-```
+```bash
 # Run FastQC for quality assessment
 fastqc -t <threads> \        # number of CPU threads to use for parallel processing
        -o <output_dir> \     # directory where FastQC reports will be saved
@@ -18,7 +18,7 @@ multiqc <input_dir> -o <output_dir>   # aggregate all FastQC reports from <input
 # --------------------
 # Example (8 threads)
 # --------------------
-'''
+'''bash
        fastqc -t 8
        -o results/qc/fastqc
        --nogroup
