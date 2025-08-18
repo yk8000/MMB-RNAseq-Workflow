@@ -1,24 +1,18 @@
-# Step 3A. Alignment-free quantification using Salmon — Guide
+# Step 3A-1: Alignment-free quantification using Salmon
 
-## Purpose
-Quantify transcript abundance from paired-end FASTQ without alignment, then summarize to gene level with tximport.
+## Tools
+- Salmon (e.g., v1.10.0+)
 
 ## Inputs
-- Paired-end FASTQ files (`*_R1.fastq.gz`, `*_R2.fastq.gz`)
-- Reference transcriptome FASTA used to build the Salmon index
-- `tx2gene.tsv` (columns: `transcript_id`, `gene_id`) consistent with the same annotation version
-- `samples.tsv` (min columns: `sample_id`, `salmon_dir` → per-sample Salmon output directory)
+- Reference transcriptome FASTA (`<transcripts.fa>`)
+- Paired-end FASTQ files (`<read1.fastq.gz>`, `<read2.fastq.gz>`)
 
 ## Outputs
-- Per-sample Salmon outputs containing `quant.sf`
-- Gene-level tables in `results/tximport/`:
-  - `gene_counts.tsv`, `gene_tpm.tsv`, `gene_length.tsv`
-
-## Key options / parameters
-- Library type autodetection (`-l A`)
-- Selective alignment (`--validateMappings`)
-- Threads (`-p`) to match your hardware
+- Salmon index directory (`<index_name>`)
+- Per-sample quantification results in `<output_dir>/quant.sf`
+  - Contains transcript-level abundance estimates (TPM, NumReads, EffectiveLength, etc.)
 
 ## Notes
-- Ensure annotation versions match between the index FASTA and `tx2gene.tsv`.
-- Run quantification per sample and record output paths in `samples.tsv`.
+- Build the Salmon index once per reference transcriptome.
+- Run `salmon quant` separately for each sample.
+- `quant.sf` files will be used in the next step (gene-level summarization with tximport).
