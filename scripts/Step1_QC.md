@@ -17,7 +17,7 @@ multiqc <input_dir> -o <output_dir>   # aggregate all FastQC reports from <input
 ```
 
 
-# Example (8 threads)
+## Example (8 threads)
 
 ```bash
        fastqc -t 8
