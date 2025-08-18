@@ -20,10 +20,10 @@ multiqc <input_dir> -o <output_dir>   # aggregate all FastQC reports from <input
 ## Example (8 threads)
 
 ```bash
-       fastqc -t 8
-       -o results/qc/fastqc
-       --nogroup
-       -f fastq data/*.fastq.gz
+fastqc -t 8
+-o results/qc/fastqc
+--nogroup
+-f fastq data/*.fastq.gz
 
-       multiqc results/qc/fastqc -o results/qc/multiqc
+multiqc results/qc/fastqc -o results/qc/multiqc
 ```
