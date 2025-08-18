@@ -1,4 +1,3 @@
-'''
 # Step1: Quality Assessment (FastQC & MultiQC)
 
 This step performs quality assessment of raw FASTQ files.  
