@@ -26,3 +26,4 @@ multiqc <input_dir> -o <output_dir>   # aggregate all FastQC reports from <input
        -f fastq data/*.fastq.gz
 
        multiqc results/qc/fastqc -o results/qc/multiqc
+'''
