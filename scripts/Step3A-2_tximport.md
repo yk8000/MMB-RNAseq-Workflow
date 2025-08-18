@@ -1,6 +1,7 @@
 # Gene-level summarization with tximport
-# Summarize transcript-level quantification to gene-level counts/TPM
+## Summarize transcript-level quantification to gene-level counts/TPM
 ```
+# Rscript
 library(tximport)
 
 samples <- read_tsv("samples.tsv", show_col_types = FALSE)
