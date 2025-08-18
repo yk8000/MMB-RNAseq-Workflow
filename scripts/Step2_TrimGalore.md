@@ -1,9 +1,9 @@
-Step2: Adapter Trimming and Quality Filtering (Trim Galore!)
+# Step2: Adapter Trimming and Quality Filtering (Trim Galore!)
 
 This step performs adapter trimming and quality filtering of paired-end FASTQ files using Trim Galore!.
 Note: Replace <adapter_sequence> with the actual adapter sequence used in your library preparation kit.
 
-Commands
+## Commands
 ```
 # Run Trim Galore! for adapter trimming and quality filtering
 trim_galore --paired \                 # specify paired-end reads
@@ -12,7 +12,7 @@ trim_galore --paired \                 # specify paired-end reads
             --adapter <adapter_sequence> \  # replace with actual adapter sequence
             *_R1.fastq.gz *_R2.fastq.gz     # input FASTQ files (paired-end)
 ```
-Example (Illumina adapter, 8 threads)
+## Example (Illumina adapter, 8 threads)
 ```
 trim_galore --paired \
             --quality 20 \
