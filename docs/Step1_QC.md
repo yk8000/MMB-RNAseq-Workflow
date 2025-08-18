@@ -10,10 +10,3 @@
 ## Outputs
 - `results/qc/fastqc/` : per-sample FastQC HTML/ZIP reports  
 - `results/qc/multiqc/multiqc_report.html` : aggregated summary
-
-## Usage
-```bash
-bash scripts/Step1-1_QC.sh \
-  --input_dir path/to/fastq \
-  --output_dir results/qc \
-  --threads 8
