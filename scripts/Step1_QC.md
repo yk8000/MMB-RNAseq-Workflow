@@ -15,10 +15,11 @@ fastqc -t <threads> \        # number of CPU threads to use for parallel process
 
 # Aggregate FastQC reports with MultiQC
 multiqc <input_dir> -o <output_dir>   # aggregate all FastQC reports from <input_dir> into a summary report
-
+'''
 # --------------------
 # Example (8 threads)
 # --------------------
+'''
        fastqc -t 8
        -o results/qc/fastqc
        --nogroup
