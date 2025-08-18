@@ -1,6 +1,6 @@
-# Reproducible RNA-seq Workflow for Immuno-Oncology
+# Bulk RNA-seq Workflow for Immuno-Oncology
 
-This repository provides a **reproducible RNA-seq analysis pipeline** applicable to both public and in-house datasets.  
+This repository provides a **bulk RNA-seq analysis pipeline** applicable to both public and in-house datasets.  
 Target audience: cancer immunology and clinical researchers.
 
 ## Scope
