@@ -33,7 +33,8 @@ project/
 
 ### External Resources (Examples)
 - MSigDB: <https://www.gsea-msigdb.org/gsea/msigdb/>
-- CIBERSORT / CIBERSORTx: <https://cibersort.stanford.edu/> / <https://cibersortx.stanford.edu/>
+- CIBERSORTx: <https://cibersortx.stanford.edu/>
+- xCell: <https://aran-lab.com/xcell2-vignette/>
 
 ## How to Run (Overview)
 
