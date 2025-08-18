@@ -1,0 +1,35 @@
+# R
+.Rhistory
+.RData
+.Rproj.user/
+.Ruserdata
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Results (large intermediate files)
+results/*.rds
+results/*.RData
+results/*.html
+results/*.pdf
+
+# General large files
+*.rds
+*.RData
+*.rda
+*.bam
+*.bai
+*.fastq
+*.fq
+*.sam
+*.vcf
+*.bcf
+*.h5
+*.hdf5
+*.loom
+*.mtx
+*.gz
+*.zip
