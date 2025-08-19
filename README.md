@@ -99,7 +99,7 @@ project/
 
 ## Citation
 > If you use this repository, please cite:  
-> *Kobayashi Y., et al., “A Reproducible RNA-seq Workflow for Immuno-Oncology,” 2025.*  
+> *Kobayashi Y., et al., “Bulk RNA-Seq-Based Deconvolution and Functional Profiling of the Tumor Immune Landscape: A Step-by-Step Analytical Guide” 2025.*  
 (To be updated with publication details)
 
 ## Contact
