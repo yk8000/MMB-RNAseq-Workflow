@@ -17,7 +17,6 @@ project/
 │  ├─ Step1-2_<desc>.R
 │  ├─ Step2-1_<desc>.R
 │  └─ ...
-├─ results/ # Outputs (figures, tables, etc.)
 └─ docs/ # Supplementary notes
 ```
 
