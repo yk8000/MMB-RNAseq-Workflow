@@ -23,3 +23,24 @@ STAR \
   --outSAMtype BAM SortedByCoordinate \    # output coordinate-sorted BAM
   --outFileNamePrefix <output_prefix>      # prefix for output filenames
 #------------------------------------------------------------------------
+```
+
+## Example
+```
+# Build STAR index (GRCh38 example)
+STAR \
+  --runThreadN 8 \
+  --runMode genomeGenerate \
+  --genomeDir ref/STAR_index \
+  --genomeFastaFiles ref/GRCh38.primary_assembly.genome.fa \
+  --sjdbGTFfile ref/gencode.v46.annotation.gtf
+
+# Align one sample (gzipped FASTQ)
+# If inputs are .fastq.gz, add: --readFilesCommand zcat
+STAR \
+  --runThreadN 8 \
+  --genomeDir ref/STAR_index \
+  --readFilesIn data/S1_R1.fastq.gz data/S1_R2.fastq.gz \
+  --readFilesCommand zcat \
+  --outSAMtype BAM SortedByCoordinate \
+  --outFileNamePrefix results/star/S1_
