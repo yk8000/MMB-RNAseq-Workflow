@@ -7,6 +7,8 @@ library(readr)
 library(tibble)
 library(DESeq2)
 
+set.seed(1234)
+
 # Load sample metadata
 s <- read_tsv("samples.tsv", show_col_types = FALSE)
 
