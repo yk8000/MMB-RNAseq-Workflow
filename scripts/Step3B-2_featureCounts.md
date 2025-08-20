@@ -19,7 +19,7 @@ featureCounts \
 #------------------------------------------------------------------------
 ```
 
-## Notes
+Notes
 
 Paired-end data: keep -p. For single-end, remove -p.
 
@@ -27,7 +27,7 @@ Make sure the GTF matches the genome/annotation version used by STAR.
 
 If you used name-sorted BAMs, add -B/-C options as needed (see featureCounts docs).
 
-Example
+## Example
 ```
 # Count fragments for multiple samples (paired-end, reverse-stranded libraries, 8 threads)
 featureCounts \
