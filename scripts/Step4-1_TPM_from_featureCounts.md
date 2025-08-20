@@ -1,5 +1,5 @@
 # TPM Calculation (Option B. Alignment-based)
-# NOTE: This script is ONLY used when quantification was performed via STAR + featureCounts (Option B).
+## NOTE: This script is ONLY used when quantification was performed via STAR + featureCounts (Option B).
 
 ```
 library(readr)
