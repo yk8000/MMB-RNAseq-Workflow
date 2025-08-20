@@ -19,7 +19,7 @@ featureCounts \
 #------------------------------------------------------------------------
 ```
 
-Notes
+## Notes
 
 Paired-end data: keep -p. For single-end, remove -p.
 
