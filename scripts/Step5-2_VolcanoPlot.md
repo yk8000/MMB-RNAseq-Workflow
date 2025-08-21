@@ -1,4 +1,4 @@
-# Volcano plot (EnhancedVolcano style)
+# Step5-2. Volcano Plot of Differentially Expressed Genes
 This script visualizes the DESeq2 results from Step5-1 (DEG_results_raw.csv) 
 by drawing a volcano plot highlighting significant up- and down-regulated genes.
 
