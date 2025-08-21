@@ -1,5 +1,6 @@
 # Option A. Salmon (tximport counts)
 ## Normalization using DESeq2 on gene-level counts from Salmon (via tximport)
+
 ```
 # Rscripts
 
@@ -9,32 +10,50 @@ library(DESeq2)
 
 set.seed(1234)
 
-# Load sample metadata
+# ---------------------------
+# 1) Load sample metadata
+# ---------------------------
 s <- read_tsv("samples.tsv", show_col_types = FALSE)
 
-# Load counts: gene_counts_salmon.csv (1st column = gene IDs)
+# ---------------------------
+# 2) Load counts (Salmon-derived counts)
+# ---------------------------
+# gene_counts_salmon.csv: 1st column = gene IDs
 cm <- read_csv("gene_counts_salmon.csv")
 cm <- cm %>%
   column_to_rownames(1) %>%
   as.matrix()
 
-# Align columns with metadata and round to integers
+# ---------------------------
+# 3) Align columns with metadata and round to integers
+# ---------------------------
 cm <- round(cm[, s$sample_id, drop = FALSE])
 
-# Create colData (design: condition)
+# ---------------------------
+# 4) Create colData (design: condition)
+# ---------------------------
 coldata <- data.frame(condition = s$condition,
                       row.names = s$sample_id)
 
-# DESeq2 normalization → vst / rlog
+# ---------------------------
+# 5) Build DESeq2 object
+# ---------------------------
 dds <- DESeqDataSetFromMatrix(cm, coldata, ~ condition)
 dds <- estimateSizeFactors(dds)
 dds <- estimateDispersions(dds)
 
+# ---------------------------
+# 6) Variance Stabilizing Transformation (VST)
+# ---------------------------
 vst <- vst(dds, blind = FALSE)
 write.csv(assay(vst), "normalized_vst.csv")
 
+# ---------------------------
+# 7) Regularized log transformation (rlog)
+# ---------------------------
 rlg <- rlog(dds, blind = FALSE)
 write.csv(assay(rlg), "normalized_rlog.csv")
+")
 ```
 # Option B. STAR + featureCounts
 ## Normalization using DESeq2 on gene-level counts from featureCounts
@@ -46,10 +65,14 @@ library(dplyr)
 library(tibble)
 library(DESeq2)
 
-# Load sample metadata
+# ---------------------------
+# 1) Load sample metadata
+# ---------------------------
 s <- read_tsv("samples.tsv", show_col_types = FALSE)
 
-# Load counts: featureCounts output (gene_counts.txt)
+# ---------------------------
+# 2) Load counts (featureCounts output)
+# ---------------------------
 # Keep only Geneid + sample columns (drop annotation columns)
 fc <- read_tsv("gene_counts.txt", comment = "#", show_col_types = FALSE)
 cm <- fc %>%
@@ -57,23 +80,36 @@ cm <- fc %>%
   column_to_rownames("Geneid") %>%
   as.matrix()
 
-# Align columns with metadata and round to integers
+# ---------------------------
+# 3) Align columns with metadata and round to integers
+# ---------------------------
 cm <- round(cm[, s$sample_id, drop = FALSE])
 
-# Create colData (design: condition)
+# ---------------------------
+# 4) Create colData (design: condition)
+# ---------------------------
 coldata <- data.frame(condition = s$condition,
                       row.names = s$sample_id)
 
-# DESeq2 normalization → vst / rlog
+# ---------------------------
+# 5) Build DESeq2 object and run normalization
+# ---------------------------
 dds <- DESeqDataSetFromMatrix(cm, coldata, ~ condition)
 dds <- estimateSizeFactors(dds)
 dds <- estimateDispersions(dds)
 
+# ---------------------------
+# 6) Variance Stabilizing Transformation (VST)
+# ---------------------------
 vst <- vst(dds, blind = FALSE)
 write.csv(assay(vst), "normalized_vst.csv")
 
+# ---------------------------
+# 7) Regularized log transformation (rlog)
+# ---------------------------
 rlg <- rlog(dds, blind = FALSE)
 write.csv(assay(rlg), "normalized_rlog.csv")
+
 ```
 ## Code Explanation
 samples.tsv
