@@ -13,9 +13,9 @@ project/
 ├─ README.md
 ├─ LICENSE # MIT (code)
 ├─ scripts/
-│  ├─ Step1-1_<desc>.R
-│  ├─ Step1-2_<desc>.R
-│  ├─ Step2-1_<desc>.R
+│  ├─ Step1-1_<desc>.md
+│  ├─ Step1-2_<desc>.md
+│  ├─ Step2-1_<desc>.md
 │  └─ ...
 └─ docs/ # Supplementary notes
 ```
