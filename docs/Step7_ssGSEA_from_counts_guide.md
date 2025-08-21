@@ -1,4 +1,4 @@
-# Step 7. Step 7. Signature Analysis with ssGSEA
+# Step 7. Signature Analysis with ssGSEA
 Using DESeq2 VST-normalized data (or TPM), we perform **single-sample GSEA (ssGSEA)** with MSigDB or custom gene sets to compute signature scores per sample and visualize them.  
 
 ## Pipeline
