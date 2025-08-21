@@ -13,7 +13,7 @@ library(dplyr)
 library(AnnotationDbi)
 library(org.Hs.eg.db)
 
-set.seed(1234)
+set.seed(1234) # project convention
 
 # ---------------------------
 # 1) Load inputs
@@ -128,33 +128,33 @@ test_sets_split <- function(scores, meta, min_pairs = 3) {
 
   res <- lapply(rownames(scores), function(gs){
     df <- data.frame(
-      score      = as.numeric(scores[gs, ]),
-      patient_id = meta$patient_id,
-      condition  = meta$condition,
+      score      = as.numeric(scores[gs, ]),  # ssGSEA score per sample
+      patient_id = meta$patient_id,           # used to detect pairing
+      condition  = meta$condition,            # pre/post grouping
       stringsAsFactors = FALSE
     )
 
-    # Check if both pre/post samples exist for each patient
+    # Check if both pre/post samples exist for each patient -> if yes, do paired test
     pts_pre  <- unique(df$patient_id[df$condition == "pre"])
     pts_post <- unique(df$patient_id[df$condition == "post"])
     pts      <- intersect(pts_pre, pts_post)
 
     if (length(pts) >= min_pairs) {
-      ## ----- paired: create difference vector correctly -----
+      ## ----- paired: compute per-patient diffs (post - pre) and run signed-rank test -----
       diffs <- sapply(pts, function(id){
         pre_val  <- df$score[df$condition=="pre"  & df$patient_id==id][1]
         post_val <- df$score[df$condition=="post" & df$patient_id==id][1]
         post_val - pre_val
       })
       diffs <- diffs[is.finite(diffs)]
-      stat  <- suppressWarnings(wilcox.test(diffs))  # Wilcoxon signed-rank test
-      # Group means (reference values)
+      stat  <- suppressWarnings(wilcox.test(diffs))  # Wilcoxon signed-rank test on diffs
+      # Reference means (reported alongside)
       mean_pre  <- mean(df$score[df$condition=="pre"],  na.rm=TRUE)
       mean_post <- mean(df$score[df$condition=="post"], na.rm=TRUE)
       paired <- TRUE
 
     } else {
-      ## ----- unpaired -----
+      ## ----- unpaired: fall back to rank-sum test between groups -----
       pre_vals  <- df$score[df$condition=="pre"]
       post_vals <- df$score[df$condition=="post"]
       stat  <- suppressWarnings(wilcox.test(post_vals, pre_vals, paired = FALSE))
@@ -167,7 +167,7 @@ test_sets_split <- function(scores, meta, min_pairs = 3) {
       set       = gs,
       mean_pre  = mean_pre,
       mean_post = mean_post,
-      diff      = mean_post - mean_pre,
+      diff      = mean_post - mean_pre,  # effect size reported
       p         = unname(stat$p.value),
       paired    = paired,
       stringsAsFactors = FALSE
@@ -175,13 +175,13 @@ test_sets_split <- function(scores, meta, min_pairs = 3) {
   })
 
   out <- do.call(rbind, res)
-  out$FDR <- p.adjust(out$p, method = "BH")
+  out$FDR <- p.adjust(out$p, method = "BH")  # multiple testing correction
   out
 }
 
 # Run tests and filter significant sets
 res <- test_sets_split(scores, colData)
-sig <- subset(res, FDR < 0.05)                # threshold
+sig <- subset(res, FDR < 0.05)                # FDR threshold
 sig <- subset(sig, abs(diff) >= 0.05)         # optional effect-size filter
 
 # If too many, keep top-N by |diff|
@@ -193,7 +193,7 @@ sig_top <- head(sig, N)
 if (nrow(sig_top) == 0) stop("No significant gene sets at the chosen thresholds.")
 mat <- scores[sig_top$set, , drop = FALSE]
 
-# Column annotations
+# Column annotations (optional, shown if columns exist in metadata)
 ann <- data.frame(
   batch      = colData[colnames(mat), "batch"],
   patient_id = colData[colnames(mat), "patient_id"],
@@ -201,7 +201,7 @@ ann <- data.frame(
 )
 rownames(ann) <- colnames(mat)
 
-# Plot heatmap (raw ssGSEA scores; Z-score across rows)
+# Plot heatmap (row-wise Z-score via scale(); annotations show batch/patient/condition)
 png("07-ssGSEA_sigsets_heatmap.png", width = 2800, height = 2000, res = 300)
 pheatmap(
   scale(mat),
@@ -219,4 +219,29 @@ pheatmap(
   main = "Significant immunologic signatures (Wilcoxon, FDR<0.05)"
 )
 dev.off()
-#------------------------------------------------------------------------
+```
+
+## Code Explanation
+
+- **alpha <- 0.05; lfc <- 1**  
+  Define thresholds for significance (adjusted p-value < 0.05 and |log2FC| > 1).
+- **res$padj[is.na(res$padj)] <- 1**  
+  Replace missing adjusted p-values with 1, so they are treated as non-significant.
+- **up_ids_raw / down_ids_raw**  
+  Split DEGs into UP (log2FC > 1) and DOWN (log2FC < -1) sets under the padj threshold.
+- **strip_version <- function(x) sub("\\..*$", "", x)**  
+  Remove Ensembl version suffix (e.g., ENSG00000141510.12 → ENSG00000141510).
+- **bitr(...)**  
+  Map Ensembl IDs to ENTREZ IDs and SYMBOLs for KEGG analysis. Drop unmapped IDs.
+- **run_enrich_go_ens(...)**  
+  Perform GO enrichment using Ensembl IDs as input; results are converted to readable SYMBOLs.
+- **simplify_bp(...)**  
+  Reduce redundancy in GO Biological Process terms by clustering similar terms.
+- **run_enrich_kegg(...)**  
+  Perform KEGG pathway enrichment using ENTREZ IDs.
+- **one_side(...)**  
+  Wrapper to handle one DEG side (UP or DOWN):  
+  1. Save DEG lists (Ensembl + mapped ENTREZ)  
+  2. Run GO (BP/CC/MF) and KEGG enrichment  
+  3. Save results as CSVs and dot plots  
+  4. Handle empty sets gracefully by outputting empty CSVs.
