@@ -5,7 +5,7 @@ Build a genome index and align RNA-seq reads to the reference genome using STAR.
 This step produces coordinate-sorted BAM files for downstream quantification.
 
 ## Tools
-- STAR (e.g., v2.7+)
+- **STAR** (e.g., v2.7+)
 
 ## Inputs
 - Reference genome FASTA (e.g., `GRCh38.primary_assembly.genome.fa`)  
