@@ -1,4 +1,5 @@
-# Step5-1. ifferential expression on raw counts using DESeq2
+# Step5-1. Differential Gene Expression (DGE) Analysis with DESeq2  
+This step performs differential gene expression (DGE) analysis on raw count data using **DESeq2**, supporting both paired and unpaired designs, with optional batch adjustment.  
 
 ```
 # Rscript
