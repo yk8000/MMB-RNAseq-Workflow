@@ -1,7 +1,7 @@
 # Step 3B-2. Gene-level Counting with featureCounts
 
 ## Tools 
-- featureCounts (e.g., v2.0.3+)
+- **featureCounts** (e.g., v2.0.3+)
 
 ## Inputs
 - Aligned BAM files (from STAR)  
@@ -22,4 +22,4 @@
 ## Notes
 - The GTF annotation must match the genome reference used for STAR alignment.  
 - For single-end libraries, omit `-p`.  
-- For downstream DESeq2/edgeR analysis, `gene_counts.txt` serves as the raw input count matrix.  
+- For downstream DESeq2/edgeR analysis, `gene_counts.txt` serves as the raw input count matrix.
