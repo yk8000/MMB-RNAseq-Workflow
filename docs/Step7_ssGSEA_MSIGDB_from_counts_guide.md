@@ -1,4 +1,7 @@
-# Step7_ssGSEA_MSIGDB_from_counts.md
+Step7_ssGSEA_MSIGDB_from_counts.md
+Single-sample GSEA using MSigDB gene sets
+
+Here we perform single-sample GSEA (ssGSEA) on a DESeq2 VST-normalized matrix, using MSigDB gene sets (e.g., HALLMARK or C7). The results are exported as enrichment scores and a heatmap of significant sets.
 
 ## Pipeline
 `gene_counts.txt` → **DESeq2** VST → save normalized matrix → **GSVA::ssGSEA** with **MSigDB (e.g., HALLMARK or C7)** → export scores and heatmap of significant sets
