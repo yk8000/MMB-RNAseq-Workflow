@@ -1,6 +1,7 @@
 # Step 7. Immune Signature Analysis with ssGSEA  
 This step computes **immune signature scores** using **ssGSEA (GSVA)** on a DESeq2 VST-normalized matrix built directly from raw counts.  
-Pipeline: `gene_counts.txt` → **DESeq2** VST → save normalized matrix → **GSVA::ssGSEA** with **MSigDB C7 (Immunologic Signatures)** → export scores and a heatmap of significant sets.
+Pipeline: `gene_counts.txt` → **DESeq2** VST → save normalized matrix → **GSVA::ssGSEA** with **MSigDB Hallmark (H collection, example)** → export scores and a heatmap of significant sets.
+
 
 ```
 # Rscript
@@ -88,27 +89,23 @@ if (any(looks_like_ensembl)) {
 write.csv(expr_vst, "07_input_normalized_vst.csv", quote = FALSE)
 
 # ---------------------------
-# 5) Prepare immune gene sets (MSigDB C7: Immunologic Signatures, human)
+# 5) Prepare Hallmark gene sets (MSigDB H: Hallmark, human, example)
 # ---------------------------
-c7_all <- msigdbr(species = "Homo sapiens", collection = "C7")
+h_all <- msigdbr(species = "Homo sapiens", category = "H")
 
-# If you want only IMMUNESIGDB sets:
-if ("gs_subcollection" %in% colnames(c7_all)) {
-  c7_imm <- subset(c7_all, gs_subcollection == "IMMUNESIGDB",
-                   select = c("gs_name", "gene_symbol"))
-} else {
-  # Fallback: if gs_subcollection doesn't exist in your build, use all C7 sets
-  c7_imm <- c7_all[, c("gs_name", "gene_symbol")]
-}
+# - Each row corresponds to one gene in one Hallmark set
+# - Select columns for set name and gene symbol
+hallmark <- h_all[, c("gs_name", "gene_symbol")]
 
-split_by_set <- split(c7_imm$gene_symbol, c7_imm$gs_name)  # named list
+# Convert to a named list (genes per gene set)
+split_by_set <- split(hallmark$gene_symbol, hallmark$gs_name)
 genesets <- lapply(split_by_set, unique)
 
-# Restrict to genes present in your matrix
+# Restrict to genes present in the expression matrix
 genesets <- lapply(genesets, function(g) intersect(g, rownames(expr_vst)))
 genesets <- genesets[vapply(genesets, length, 1L) > 0]
 
-if (length(genesets) == 0) stop("No C7 gene sets overlap with the expression matrix row names.")
+if (length(genesets) == 0) stop("No Hallmark gene sets overlap with the expression matrix row names.")
 
 # ---------------------------
 # 6) ssGSEA (GSVA)
@@ -119,7 +116,7 @@ scores <- gsva(param)
 # ---------------------------
 # 7) Save scores and heatmap
 # ---------------------------
-write.csv(scores, "07-ssGSEA_C7_scores.csv", quote = FALSE)
+write.csv(scores, "07-ssGSEA_HM_scores.csv", quote = FALSE)
 
 # Per-set Wilcoxon test: explicitly separate paired vs unpaired comparisons
 test_sets_split <- function(scores, meta, min_pairs = 3) {
