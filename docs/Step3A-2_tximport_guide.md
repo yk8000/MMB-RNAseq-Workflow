@@ -1,9 +1,9 @@
 # Step 3A-2. Gene-level Summarization with tximport
 
 ## Tools
-- R (≥4.0)  
-- tximport (e.g., v1.20+)  
-- readr (for reading TSV files)  
+- **R** (≥4.0)  
+- **tximport** (e.g., v1.20+)  
+- **readr** (for reading TSV files)  
 
 ## Inputs
 - `samples.tsv` : Tab-delimited file containing sample information (at minimum: `sample_id`, `salmon_dir`)  
@@ -20,5 +20,4 @@
 
 ## Notes
 - Ensure that the reference annotation used to build `tx2gene.tsv` matches the one used for Salmon index generation.  
-- `samples.tsv` should point to directories where `quant.sf` files are located. Example:  
-
+- `samples.tsv` should point to directories where `quant.sf` files are located.  
