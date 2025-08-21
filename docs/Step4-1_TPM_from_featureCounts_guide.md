@@ -1,4 +1,4 @@
-# TPM Calculation (Option B. Alignment-based)
+# Step 4-1. TPM Calculation from featureCounts Output (Option B. Alignment-based)
 
 ## Tools
 - **R** (≥4.0)  
