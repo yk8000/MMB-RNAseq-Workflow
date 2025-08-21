@@ -1,7 +1,7 @@
 # Step 3A-1: Alignment-free quantification using Salmon
 
 ## Tools
-- **Salmon (e.g., v1.10.0+)**
+- **Salmon** (e.g., v1.10.0+)
 
 ## Inputs
 - Reference transcriptome FASTA (`<transcripts.fa>`)
