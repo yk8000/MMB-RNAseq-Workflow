@@ -1,4 +1,4 @@
-# Normalization with DESeq2
+# Step 4-2. Normalization with DESeq2
 
 This step performs normalization of raw count data using **DESeq2**, producing variance-stabilized (VST) and regularized log-transformed (rlog) expression matrices for downstream analyses (e.g., PCA, clustering, differential expression).
 
