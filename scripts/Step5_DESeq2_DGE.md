@@ -25,6 +25,10 @@ colData    <- colData[common_ids, , drop = FALSE]
 # ---------------------------
 # 3) Factors
 # ---------------------------
+# - condition: biological group of interest (e.g., pre vs post treatment).
+#              The first level ("pre") is treated as reference; log2FC is relative to this.
+# - patient_id: subject identifier, used to model paired designs (pre/post from same patient).
+# - batch: technical variable, used to account for processing or sequencing batch effects.
 colData$condition  <- factor(colData$condition, levels = c("pre","post"))
 colData$patient_id <- factor(colData$patient_id)
 colData$batch      <- factor(colData$batch)
@@ -78,3 +82,12 @@ res_df$padj[is.na(res_df$padj)] <- 1
 sig <- subset(res_df, padj < 0.05 & abs(log2FoldChange) > 1)
 write.csv(sig, "DEG_results_sig_padj0.05_log2FC1.csv", row.names = TRUE)
 ```
+
+## Code Explanation
+- condition: Defines the biological groups being compared (e.g., pre vs post). The first level ("pre") is the reference; log2FoldChange values are computed relative to this reference.
+-patient_id: Used in paired designs to explicitly model pre/post measurements from the same patient, thereby controlling for inter-patient variability.
+- batch: Represents technical effects (e.g., sequencing run, library prep). Including batch in the design accounts for such unwanted variation.
+- DESeqDataSetFromMatrix(...): Construct the DESeq2 dataset using the chosen design formula.
+- DESeq(dds): Performs normalization, dispersion estimation, and hypothesis testing.
+- results(dds, contrast = c("condition","post","pre")): Computes log2(post/pre). Positive values = higher in post; negative values = higher in pre.
+- Example filtering with padj < 0.05 & |log2FC| > 1 is shown.
