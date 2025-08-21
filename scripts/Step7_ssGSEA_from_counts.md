@@ -1,8 +1,11 @@
-# Step 7. Immune Signature Analysis with ssGSEA  
-This script performs immune signature analysis (ssGSEA with GSVA) from bulk RNA-seq data.
-By default, it uses a DESeq2 VST-normalized matrix derived from raw counts.
-Alternatively, a TPM matrix can also be used as the input expression matrix for ssGSEA.
+# Step 7. Signature Analysis with ssGSEA  
 
+This step performs ssGSEA on normalized expression data to calculate enrichment scores for each sample.
+
+**Note on input data choice**  
+- If you analyze **only your own dataset**: use **VST** (DESeq2 variance-stabilized counts).  
+- If you want to **integrate with external datasets (e.g., TCGA)**: convert to **TPM** and use TPM as input.  
+ 
 ```
 # Rscript
 
