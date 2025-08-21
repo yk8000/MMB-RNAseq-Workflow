@@ -2,7 +2,7 @@
 Normalization including batch factor in the design (~ batch + condition)
 
 ```
-# Rscripts
+# Rscript
 
 library(readr)
 library(dplyr)
@@ -34,6 +34,8 @@ coldata <- data.frame(condition = s$condition,
                       row.names = s$sample_id)
 
 # 5) Create DESeq2 dataset with batch factor in design (~ batch + condition)
+#    - 'batch' : specify batch information (from samples.tsv)
+#    - 'design': model.matrix(~ condition) keeps condition effects intact
 dds <- DESeqDataSetFromMatrix(cm, coldata, ~ batch + condition)
 dds <- estimateSizeFactors(dds)
 dds <- estimateDispersions(dds)
@@ -46,3 +48,34 @@ write.csv(vst_mat, "vst_design_batch_condition.csv")
 ```
 ## Option B. limma::removeBatchEffect
 Batch effect removal from an already normalized VST matrix
+
+```
+# Rscript
+
+library(readr)
+library(limma)
+
+# 1) Load sample metadata (samples.tsv)
+s <- read_tsv("samples.tsv", show_col_types = FALSE)
+
+# 2) Load VST matrix from previous step
+#    - normalized_vst.csv produced by DESeq2 (rows = genes, cols = samples)
+vst_mat <- as.matrix(read.csv("normalized_vst.csv", 
+                              row.names = 1, 
+                              check.names = FALSE))
+
+# 3) Align columns with metadata
+#    - ensure order of columns in vst_mat matches s$sample_id
+vst_mat <- vst_mat[, s$sample_id, drop = FALSE]
+
+# 4) Remove batch effect using limma::removeBatchEffect
+#    - 'batch' : specify batch information (from samples.tsv)
+#    - 'design': model.matrix(~ condition) keeps condition effects intact
+design <- model.matrix(~ s$condition)
+vst_bc <- removeBatchEffect(vst_mat, batch = s$batch, design = design)
+
+# 5) Save batch-corrected VST matrix
+#    - output file: vst_batchCorrected_limma.csv
+write.csv(vst_bc, "vst_batchCorrected_limma.csv")
+```
+
