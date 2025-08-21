@@ -1,4 +1,4 @@
-# Step4-2. Batch Effect Correction (Optional)
+# Step4-3. Batch Effect Correction (Optional)
 
 Batch effects arising from technical variation (e.g., sequencing runs or sample processing) can be adjusted either **during normalization (Option A)** or **after normalization (Option B)**.
 
