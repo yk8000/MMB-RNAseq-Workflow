@@ -84,6 +84,12 @@ write.csv(sig, "DEG_results_sig_padj0.05_log2FC1.csv", row.names = TRUE)
 ```
 
 ## Code Explanation
+```
+gene_counts.txt
+
+```
+```
+```
 - condition: Defines the biological groups being compared (e.g., pre vs post). The first level ("pre") is the reference; log2FoldChange values are computed relative to this reference.
 -patient_id: Used in paired designs to explicitly model pre/post measurements from the same patient, thereby controlling for inter-patient variability.
 - batch: Represents technical effects (e.g., sequencing run, library prep). Including batch in the design accounts for such unwanted variation.
