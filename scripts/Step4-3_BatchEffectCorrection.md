@@ -9,10 +9,15 @@ library(dplyr)
 library(tibble)
 library(DESeq2)
 
-# 1) Load sample metadata (samples.tsv: must contain sample_id, condition, batch)
+# ---------------------------
+# 1) Load sample metadata
+# ---------------------------
+# samples.tsv: must contain sample_id, condition, batch
 s <- read_tsv("samples.tsv", show_col_types = FALSE)
 
+# ---------------------------
 # 2) Load counts (choose one loader)
+# ---------------------------
 ## 2-1) featureCounts output (gene_counts.txt)
 fc <- read_tsv("gene_counts.txt", comment = "#", show_col_types = FALSE)
 cm <- fc %>%
@@ -25,26 +30,37 @@ cm <- fc %>%
 #          column_to_rownames(1) %>%
 #          as.matrix()
 
+# ---------------------------
 # 3) Align columns with metadata and round to integers
+# ---------------------------
 cm <- round(cm[, s$sample_id, drop = FALSE])
 
+# ---------------------------
 # 4) Create colData including batch
+# ---------------------------
 coldata <- data.frame(condition = s$condition,
                       batch     = s$batch,
                       row.names = s$sample_id)
 
+# ---------------------------
 # 5) Create DESeq2 dataset with batch factor in design (~ batch + condition)
-#    - 'batch' : specify batch information (from samples.tsv)
-#    - 'design': model.matrix(~ condition) keeps condition effects intact
+# ---------------------------
+# - 'batch' : specify batch information (from samples.tsv)
+# - 'design': model.matrix(~ condition) keeps condition effects intact
 dds <- DESeqDataSetFromMatrix(cm, coldata, ~ batch + condition)
 dds <- estimateSizeFactors(dds)
 dds <- estimateDispersions(dds)
 
+# ---------------------------
 # 6) Variance Stabilizing Transformation (VST), design-aware
+# ---------------------------
 vst_mat <- assay(vst(dds, blind = FALSE))
 
+# ---------------------------
 # 7) Save VST matrix
+# ---------------------------
 write.csv(vst_mat, "vst_design_batch_condition.csv")
+
 ```
 ## Option B. limma::removeBatchEffect
 Batch effect removal from an already normalized VST matrix
@@ -55,28 +71,39 @@ Batch effect removal from an already normalized VST matrix
 library(readr)
 library(limma)
 
-# 1) Load sample metadata (samples.tsv)
+# ---------------------------
+# 1) Load sample metadata
+# ---------------------------
 s <- read_tsv("samples.tsv", show_col_types = FALSE)
 
+# ---------------------------
 # 2) Load VST matrix from previous step
-#    - normalized_vst.csv produced by DESeq2 (rows = genes, cols = samples)
+# ---------------------------
+# - normalized_vst.csv produced by DESeq2 (rows = genes, cols = samples)
 vst_mat <- as.matrix(read.csv("normalized_vst.csv", 
                               row.names = 1, 
                               check.names = FALSE))
 
+# ---------------------------
 # 3) Align columns with metadata
-#    - ensure order of columns in vst_mat matches s$sample_id
+# ---------------------------
+# - ensure order of columns in vst_mat matches s$sample_id
 vst_mat <- vst_mat[, s$sample_id, drop = FALSE]
 
+# ---------------------------
 # 4) Remove batch effect using limma::removeBatchEffect
-#    - 'batch' : specify batch information (from samples.tsv)
-#    - 'design': model.matrix(~ condition) keeps condition effects intact
+# ---------------------------
+# - 'batch' : specify batch information (from samples.tsv)
+# - 'design': model.matrix(~ condition) keeps condition effects intact
 design <- model.matrix(~ s$condition)
 vst_bc <- removeBatchEffect(vst_mat, batch = s$batch, design = design)
 
+# ---------------------------
 # 5) Save batch-corrected VST matrix
-#    - output file: vst_batchCorrected_limma.csv
+# ---------------------------
+# - output file: vst_batchCorrected_limma.csv
 write.csv(vst_bc, "vst_batchCorrected_limma.csv")
+
 ```
 
 ## Code Explanation
