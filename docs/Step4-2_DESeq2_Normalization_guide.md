@@ -2,7 +2,6 @@
 
 This step performs normalization of raw count data using **DESeq2**, producing variance-stabilized (VST) and regularized log-transformed (rlog) expression matrices for downstream analyses (e.g., PCA, clustering, differential expression).
 
----
 
 ## Option A. Salmon (tximport counts)
 
@@ -17,7 +16,6 @@ This step performs normalization of raw count data using **DESeq2**, producing v
 **Notes**
 - The design formula can be extended to include additional covariates, e.g. `~ batch + condition`.
 
----
 
 ## Option B. STAR + featureCounts
 
@@ -34,7 +32,6 @@ This step performs normalization of raw count data using **DESeq2**, producing v
 - Annotation columns (`Chr`, `Start`, `End`, `Strand`, `Length`) are ignored.  
 - `sample_id` in `samples.tsv` must exactly match the column names in `gene_counts.txt`.
 
----
 
 
 S3           Normal      Batch2
