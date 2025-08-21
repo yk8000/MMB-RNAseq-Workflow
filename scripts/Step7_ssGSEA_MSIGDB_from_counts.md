@@ -1,7 +1,7 @@
 # Step 7. Immune Signature Analysis with ssGSEA  
-This step computes **immune signature scores** using **ssGSEA (GSVA)** on a DESeq2 VST-normalized matrix built directly from raw counts.  
-Pipeline: `gene_counts.txt` → **DESeq2** VST → save normalized matrix → **GSVA::ssGSEA** with **MSigDB Hallmark (H collection, example)** → export scores and a heatmap of significant sets.
-
+This script performs immune signature analysis (ssGSEA with GSVA) from bulk RNA-seq data.
+By default, it uses a DESeq2 VST-normalized matrix derived from raw counts.
+Alternatively, a TPM matrix can also be used as the input expression matrix for ssGSEA.
 
 ```
 # Rscript
@@ -45,6 +45,7 @@ if (!"condition" %in% colnames(colData)) {
 # ---------------------------
 # 2) Build DESeq2 object and VST
 # ---------------------------
+# Note: TPM matrix can also be used here instead of VST for ssGSEA.
 dds <- DESeqDataSetFromMatrix(countData = counts, colData = colData, design = design_formula)
 dds <- dds[rowSums(counts(dds)) > 0, ]  # keep genes with non-zero counts
 vsd <- vst(dds, blind = TRUE)
