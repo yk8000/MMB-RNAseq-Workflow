@@ -38,7 +38,7 @@ coldata <- data.frame(condition = s$condition,
 # ---------------------------
 # 5) Build DESeq2 object
 # ---------------------------
-dds <- DESeqDataSetFromMatrix(cm, coldata, ~ condition)
+dds <- DESeqDataSetFromMatrix(cm, coldata, ~ batch + condition)
 dds <- estimateSizeFactors(dds)
 dds <- estimateDispersions(dds)
 
@@ -94,7 +94,7 @@ coldata <- data.frame(condition = s$condition,
 # ---------------------------
 # 5) Build DESeq2 object and run normalization
 # ---------------------------
-dds <- DESeqDataSetFromMatrix(cm, coldata, ~ condition)
+dds <- DESeqDataSetFromMatrix(cm, coldata, ~ ~ batch + condition)
 dds <- estimateSizeFactors(dds)
 dds <- estimateDispersions(dds)
 
