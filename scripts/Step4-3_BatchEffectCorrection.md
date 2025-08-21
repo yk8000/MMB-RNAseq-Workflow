@@ -79,3 +79,19 @@ vst_bc <- removeBatchEffect(vst_mat, batch = s$batch, design = design)
 write.csv(vst_bc, "vst_batchCorrected_limma.csv")
 ```
 
+## Code Explanation
+samples.tsv
+```
+sample_id	condition	batch
+S1	Tumor	Batch1
+S2	Tumor	Batch1
+S3	Normal	Batch2
+S4	Normal	Batch2
+```
+
+## Notes
+- Use **Option A (design-based)** if you are still at the raw-count stage and plan to run differential expression (`~ batch + condition`).  
+- Use **Option B (limma post-hoc)** when you already have a normalized VST matrix and want to remove batch effects for visualization (PCA, heatmaps, clustering).  
+- sample_id: Sample name. Must match the column names in the count matrix.
+- condition: Experimental group (e.g., Tumor, Normal). Used in the DESeq2 design formula.
+- batch: Batch information (optional). If batch effect correction is required, specify the design formula as ~ batch + condition.
