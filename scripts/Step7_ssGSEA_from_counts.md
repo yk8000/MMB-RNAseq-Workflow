@@ -4,7 +4,12 @@ This step performs ssGSEA on normalized expression data to calculate enrichment 
 
 **Note on input data choice**  
 - If you analyze **only your own dataset**: use **VST** (DESeq2 variance-stabilized counts).  
-- If you want to **integrate with external datasets (e.g., TCGA)**: convert to **TPM** and use TPM as input.  
+- If you want to **integrate with external datasets (e.g., TCGA)**: convert to **TPM** and use TPM as input.
+
+**Note on gene sets**  
+- This script uses **MSigDB HALLMARK** as an example.  
+- You can replace it with other collections (e.g., **C7 Immunologic Signatures**) or your **custom gene sets**.  
+- For custom gene sets, prepare a **GMT file** and import it using `GSVA::getGmt("your_geneset.gmt")`.
  
 ```
 # Rscript
