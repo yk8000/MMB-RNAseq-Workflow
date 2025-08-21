@@ -4,6 +4,10 @@ This step performs differential gene expression analysis using **DESeq2** on raw
 It compares biological conditions (e.g., pre vs post) and produces a results table containing log2 fold changes, p-values, and adjusted p-values.  
 Example filtering is shown for `padj < 0.05 & |log2FC| > 1`.
 
+## Tools
+- **R** (≥4.0)  
+- **DESeq2** (e.g., v1.30+)  
+
 ## Inputs
 - `samples.tsv` : sample metadata file (must include `condition`, optional `batch`, `patient_id`)  
 - `gene_counts.txt` : raw gene-level count matrix (featureCounts or Salmon summarized counts)  
