@@ -5,7 +5,6 @@
 - **readr** (≥2.0)  
 - **dplyr** (≥1.0)  
 
----
 
 ## Inputs
 - **gene_counts.txt**  
@@ -13,7 +12,6 @@
   - Annotation columns: `Geneid`, `Chr`, `Start`, `End`, `Strand`, `Length`  
   - Sample-specific raw counts (columns start from column 7)  
 
----
 
 ## Processing
 - Extract **gene lengths** from the `Length` column.  
@@ -29,7 +27,6 @@
 - Combine `Geneid` with TPM matrix.  
 - Save the result as a tab-delimited file.  
 
----
 
 ## Outputs
 - **tpm_matrix.txt**  
