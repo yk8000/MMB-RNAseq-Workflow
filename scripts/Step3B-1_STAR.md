@@ -1,7 +1,7 @@
 # Step 3- Option B. Alignment-based quantification using STAR + featureCounts
 ## Genome Indexing and Read Alignment with STAR
 In this step, a genome index is first created using STAR with the reference genome FASTA file and its corresponding gene annotation (GTF). Once the index is built, STAR is used to align the RNA-seq FASTQ reads to the indexed genome. This process generates sorted BAM files containing the aligned reads, along with alignment summary logs. Multi-threading options (e.g., `--runThreadN`) are recommended to accelerate the alignment.  
-**Note:** Copy & paste the following commands into your terminal and replace placeholders `<>`.
+
 
 ## Commands
 
