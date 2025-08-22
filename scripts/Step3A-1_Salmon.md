@@ -1,4 +1,4 @@
-# Step 3A. Alignment-free quantification using Salmon
+# Step 3A-1: Alignment-free quantification using Salmon
 
 This step builds a Salmon index and quantifies paired-end reads.  
 
