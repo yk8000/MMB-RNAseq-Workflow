@@ -2,6 +2,8 @@
 This script is ONLY used when quantification was performed via STAR + featureCounts (Option B).
 
 ```
+# Rscript
+
 library(readr)
 library(dplyr)
 
