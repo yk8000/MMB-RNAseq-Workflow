@@ -1,7 +1,7 @@
 # Step1: Quality Assessment (FastQC & MultiQC)
 
 This step performs quality assessment of raw FASTQ files.  
-**Note**: Copy and paste the following commands into your terminal to run them.  
+
 
 ## Commands
 
