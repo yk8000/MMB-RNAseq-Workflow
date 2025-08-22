@@ -1,4 +1,4 @@
-# Gene-level summarization with tximport
+# Step 3A-2: Gene-level summarization with tximport
 ## Summarize transcript-level quantification to gene-level counts/TPM
 ```
 # Rscript
