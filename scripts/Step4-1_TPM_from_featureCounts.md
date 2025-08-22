@@ -1,4 +1,4 @@
-# TPM Calculation (Option B. Alignment-based)
+# Step 4-1: TPM Calculation (Option B. Alignment-based)
 This script is ONLY used when quantification was performed via STAR + featureCounts (Option B).
 
 ```
