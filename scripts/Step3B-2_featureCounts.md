@@ -1,7 +1,7 @@
 # Step 3B-2: Gene-level counting with featureCounts
 
 This step counts reads/fragments per gene from STAR-aligned BAM files.  
-**Note:** Copy & paste into your terminal and replace placeholders `<>`.
+
 
 ## Command
 
