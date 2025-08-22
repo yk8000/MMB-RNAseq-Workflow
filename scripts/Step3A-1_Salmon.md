@@ -1,7 +1,7 @@
 # Step 3A. Alignment-free quantification using Salmon
 
 This step builds a Salmon index and quantifies paired-end reads.  
-**Note:** Copy & paste the commands into your terminal and replace placeholders `<>`.
+
 
 ## Commands
 
