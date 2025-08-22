@@ -2,7 +2,7 @@
 
 This step performs adapter trimming and quality filtering of paired-end FASTQ files using Trim Galore!.　\
 **Note**: Replace <adapter_sequence> with the actual adapter sequence used in your library preparation kit. \
-**Note**: Copy and paste the following commands into your terminal to run them.
+
 
 ## Commands
 ```
