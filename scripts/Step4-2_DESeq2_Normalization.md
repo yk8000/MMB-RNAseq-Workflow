@@ -1,5 +1,6 @@
 # Option A. Salmon (tximport counts)
 ## Normalization using DESeq2 on gene-level counts from Salmon (via tximport)
+In this option, transcript quantification is first performed with Salmon, producing transcript-level abundance estimates. These results are then imported into R using **tximport**, which summarizes transcript-level abundances into a gene-level count matrix. 
 
 ```
 # Rscripts
