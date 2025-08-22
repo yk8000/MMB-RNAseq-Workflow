@@ -1,5 +1,6 @@
+# Step 4-3: Batch Effect Correction
 ## A)	DESeq2 design: include batch factor (from raw counts)
-Normalization including batch factor in the design (~ batch + condition)
+In this approach, batch effects are addressed directly within the **DESeq2** model design. By specifying a formula such as `~ batch + condition`, DESeq2 accounts for both biological condition and batch simultaneously during normalization and differential expression analysis. This method ensures that unwanted technical variation is adjusted while retaining true biological signals.  
 
 ```
 # Rscript
